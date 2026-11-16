@@ -1,0 +1,345 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Automations by Eve</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout concept: asymmetric editorial hero (headline left, signal/stat panel right, never centered);
+   content reads as a legal-trust brief, not a tech-startup gradient page. */
+:root{
+  --paper:#f4f3ec;       /* cool-leaning off-white, not pure white */
+  --ink:#171f1a;         /* near-black with a teal-green bias, not pure black */
+  --ink-soft:#44524a;
+  --gold:#a9842f;        /* gold â calls to action */
+  --gold-bright:#c49b3f;
+  --teal:#1f6f68;        /* teal â structure, numbering, links */
+  --teal-bright:#2c8e86;
+  --sage:#6f9a67;        /* soft green â highlight moments */
+  --sage-bright:#86ad7c;
+  --line:#dcd8c8;
+  --card:#fcfbf4;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#121815;
+    --ink:#eef1ea;
+    --ink-soft:#b6c0b6;
+    --gold:#d6ad5e;
+    --gold-bright:#e3bd74;
+    --teal:#4fb0a8;
+    --teal-bright:#66c7bf;
+    --sage:#96b989;
+    --sage-bright:#a9c99d;
+    --line:#2e352e;
+    --card:#1a211c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#121815;
+  --ink:#eef1ea;
+  --ink-soft:#b6c0b6;
+  --gold:#d6ad5e;
+  --gold-bright:#e3bd74;
+  --teal:#4fb0a8;
+  --teal-bright:#66c7bf;
+  --sage:#96b989;
+  --sage-bright:#a9c99d;
+  --line:#2e352e;
+  --card:#1a211c;
+  color-scheme: dark;
+}
+
+*{box-sizing:border-box;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Source Sans 3', Arial, sans-serif;
+  padding-left:max(16px, env(safe-area-inset-left,0px));
+  padding-right:max(16px, env(safe-area-inset-right,0px));
+  line-height:1.5;
+}
+h1,h2,h3,.eyebrow{font-family:'Fraunces', Georgia, 'Times New Roman', serif;}
+h1,h2,h3{text-wrap:balance; margin:0; color:var(--ink); font-weight:600;}
+a{color:var(--teal-bright);}
+img{max-width:100%;}
+
+.wrap{max-width:1080px; margin:0 auto; padding-block:0;}
+
+/* NAV */
+nav{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px; padding-block:22px; border-bottom:1px solid var(--line);
+}
+.brand{font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem; letter-spacing:0.01em;}
+.brand .dot{color:var(--gold-bright);}
+.navlinks{display:flex; gap:28px; font-size:0.92rem;}
+.navlinks a{color:var(--ink-soft); text-decoration:none;}
+.navlinks a:hover{color:var(--ink);}
+.navcta{
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--ink); color:var(--paper);
+  padding:9px 18px; border-radius:3px; font-size:0.88rem; text-decoration:none;
+  white-space:nowrap;
+}
+:root[data-theme="dark"] .navcta, @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .navcta{ background:var(--gold); color:#121815; } }
+
+/* HERO */
+.hero{
+  display:grid; grid-template-columns:1.3fr 1fr; gap:48px;
+  padding-block:64px 56px; align-items:start;
+}
+.eyebrow{
+  font-family:'Source Sans 3', sans-serif; text-transform:uppercase; letter-spacing:0.12em;
+  font-size:0.78rem; color:var(--teal); font-weight:600; margin-bottom:18px; display:block;
+}
+.hero h1{font-size:clamp(2.1rem, 4.2vw, 3.3rem); line-height:1.08; max-width:14ch;}
+.hero p.lede{
+  font-size:1.08rem; color:var(--ink-soft); max-width:46ch; margin-top:20px;
+}
+.hero-ctas{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
+.btn-primary{
+  background:var(--ink); color:var(--paper); padding:13px 24px; border-radius:3px;
+  font-size:0.95rem; text-decoration:none; font-weight:600; border:1px solid var(--ink);
+}
+:root[data-theme="dark"] .btn-primary, @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .btn-primary{ background:var(--gold); border-color:var(--gold); color:#121815; } }
+.btn-secondary{
+  padding:13px 24px; border-radius:3px; font-size:0.95rem; text-decoration:none;
+  border:1px solid var(--line); color:var(--ink); font-weight:600;
+}
+
+.signal-panel{
+  background:var(--card); border:1px solid var(--line); border-radius:6px; padding:26px;
+  min-width:0;
+}
+.signal-panel .stat{
+  font-family:'Fraunces',serif; font-size:2.1rem; color:var(--sage-bright); line-height:1;
+  font-variant-numeric: tabular-nums;
+}
+.signal-panel .stat-label{font-size:0.85rem; color:var(--ink-soft); margin-top:6px;}
+.signal-divider{height:1px; background:var(--line); margin-block:18px;}
+.signal-panel p{font-size:0.92rem; color:var(--ink-soft); margin:0;}
+
+/* SECTION shared */
+section{padding-block:52px; border-top:1px solid var(--line);}
+.section-head{max-width:56ch; margin-bottom:34px;}
+.section-head .eyebrow{margin-bottom:10px;}
+.section-head h2{font-size:clamp(1.5rem,2.6vw,1.9rem);}
+.section-head p{color:var(--ink-soft); margin-top:12px; font-size:1rem;}
+
+/* PROBLEM */
+.problem-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;}
+.problem-grid .big-quote{
+  font-family:'Fraunces',serif; font-size:1.5rem; line-height:1.35; color:var(--ink);
+}
+.problem-grid .big-quote span{color:var(--sage-bright);}
+.problem-grid .support p{color:var(--ink-soft); font-size:1rem; margin:0 0 14px;}
+.problem-grid .support p:last-child{margin-bottom:0;}
+
+/* SERVICES CARDS */
+.card-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
+.svc-card{
+  background:var(--card); border:1px solid var(--line); border-radius:6px; padding:24px;
+  min-width:0;
+}
+.svc-card .num{font-family:'Fraunces',serif; color:var(--teal); font-size:0.85rem; letter-spacing:0.05em;}
+.svc-card h3{font-size:1.08rem; margin-top:10px;}
+.svc-card p{color:var(--ink-soft); font-size:0.94rem; margin-top:10px;}
+
+/* PROCESS */
+.process-row{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
+.proc-step{min-width:0; border-left:2px solid var(--line); padding-left:16px;}
+.proc-step .pnum{font-family:'Fraunces',serif; color:var(--teal-bright); font-size:1.4rem;}
+.proc-step h3{font-size:1rem; margin-top:8px;}
+.proc-step p{color:var(--ink-soft); font-size:0.88rem; margin-top:8px;}
+
+/* FOUNDER NOTE */
+.founder{display:grid; grid-template-columns:auto 1fr; gap:24px; align-items:start;}
+.founder-mark{
+  width:52px; height:52px; border-radius:50%; background:var(--ink); color:var(--paper);
+  display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif;
+  font-size:1.3rem; flex-shrink:0;
+}
+:root[data-theme="dark"] .founder-mark, @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .founder-mark{ background:var(--gold); color:#121815; } }
+.founder blockquote{margin:0; font-size:1.05rem; color:var(--ink); line-height:1.5; font-style:normal;}
+.founder .sig{margin-top:14px; font-size:0.88rem; color:var(--ink-soft);}
+
+/* CONTACT */
+.contact-box{
+  background:var(--ink); color:var(--paper); border-radius:8px; padding:40px;
+  display:grid; grid-template-columns:1.2fr 1fr; gap:32px; align-items:center;
+}
+:root[data-theme="dark"] .contact-box, @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .contact-box{ background:var(--card); border:1px solid var(--line); } }
+.contact-box h2{color:var(--paper); font-size:1.6rem;}
+:root[data-theme="dark"] .contact-box h2, @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .contact-box h2{ color:var(--ink); } }
+.contact-box p{color:#d9d4c7; margin-top:10px; font-size:0.96rem;}
+:root[data-theme="dark"] .contact-box p, @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .contact-box p{ color:var(--ink-soft); } }
+.contact-right{display:flex; flex-direction:column; gap:10px; min-width:0;}
+.email-row{
+  display:flex; align-items:center; gap:10px; background:rgba(247,244,238,0.08);
+  border:1px solid rgba(247,244,238,0.25); border-radius:4px; padding:12px 14px; min-width:0;
+}
+:root[data-theme="dark"] .email-row, @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .email-row{ background:var(--paper); border-color:var(--line); } }
+.email-row span{font-size:0.92rem; color:var(--paper); overflow-wrap:anywhere;}
+:root[data-theme="dark"] .email-row span, @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .email-row span{ color:var(--ink); } }
+.copy-btn{
+  background:var(--gold); color:#121815; border:none; border-radius:3px; padding:7px 12px;
+  font-size:0.82rem; font-weight:600; cursor:pointer; flex-shrink:0;
+}
+.copy-btn:focus-visible, .btn-primary:focus-visible, .btn-secondary:focus-visible, .navcta:focus-visible{
+  outline:2px solid var(--gold-bright); outline-offset:2px;
+}
+
+footer{padding-block:28px 40px; display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+footer p{color:var(--ink-soft); font-size:0.82rem; margin:0;}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;}
+  .problem-grid{grid-template-columns:1fr;}
+  .card-grid{grid-template-columns:1fr;}
+  .process-row{grid-template-columns:1fr 1fr; row-gap:24px;}
+  .contact-box{grid-template-columns:1fr; padding:28px;}
+  .founder{grid-template-columns:1fr;}
+}
+@media (prefers-reduced-motion: no-preference){
+  .fade-in{animation:fadeIn .5s ease-out both;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+}
+</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Sans+3:wght@400;600;700&display=swap">
+
+<div class="wrap">
+
+  <nav>
+    <div class="brand">Automations<span class="dot">Â·</span>by Eve</div>
+    <div class="navlinks">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a class="navcta" href="#contact">Book a call</a>
+  </nav>
+
+  <section class="hero" style="border-top:none; padding-top:64px;">
+    <div>
+      <span class="eyebrow">AI Search Visibility for Law Firms</span>
+      <h1>Be the firm AI recommends, not the one it skips.</h1>
+      <p class="lede">When someone asks ChatGPT, Perplexity, or Google's AI Overview who to call after an accident or an arrest, the answer comes from a short list. Automations by Eve gets your firm on it &mdash; and keeps you there.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#contact">Book a call</a>
+        <a class="btn-secondary" href="#services">See how it works</a>
+      </div>
+    </div>
+    <div class="signal-panel">
+      <div class="stat">1 in 4</div>
+      <div class="stat-label">consumer searches now happen inside an AI assistant instead of a traditional search engine &mdash; and that share is climbing every quarter.</div>
+      <div class="signal-divider"></div>
+      <p>Most law firm marketing was built for Google's old blue links. AI assistants read, cite, and recommend differently &mdash; and almost no firm has adjusted for it yet. That gap is the opportunity.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">The Shift</span>
+      <h2>Your next client may never see a search results page.</h2>
+    </div>
+    <div class="problem-grid">
+      <div class="big-quote">AI assistants don't rank ten blue links. They pick <span>one or two</span> firms to recommend &mdash; by name.</div>
+      <div class="support">
+        <p>If your firm isn't structured, written, and cited in the way these systems read and trust, you're invisible to a growing share of people searching for exactly the help you offer.</p>
+        <p>Generative Engine Optimization (GEO) is the discipline of making sure your firm is one of the names an AI system surfaces, with the right context, credentials, and proof attached.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="section-head">
+      <span class="eyebrow">What We Do</span>
+      <h2>A GEO program built specifically for law firms.</h2>
+      <p>We handle the research, writing, technical setup, and ongoing monitoring &mdash; you keep practicing law.</p>
+    </div>
+    <div class="card-grid">
+      <div class="svc-card">
+        <div class="num">01</div>
+        <h3>Authority, Content &amp; Press</h3>
+        <p>Practice-area pages, attorney bios, and case-result content written the way AI systems extract and cite expertise &mdash; backed by placement in regional and national publications that give your firm the kind of third-party citations AI platforms trust most.</p>
+      </div>
+      <div class="svc-card">
+        <div class="num">02</div>
+        <h3>Technical &amp; Structured Data</h3>
+        <p>The structured markup, citations, and site architecture that let AI systems correctly understand who you are, where you practice, and what you're qualified to handle.</p>
+      </div>
+      <div class="svc-card">
+        <div class="num">03</div>
+        <h3>Platform Monitoring</h3>
+        <p>Ongoing tracking of how your firm actually appears &mdash; or doesn't &mdash; across ChatGPT, Perplexity, and AI-powered search, with clear reporting on what's changing.</p>
+      </div>
+      <div class="svc-card">
+        <div class="num">04</div>
+        <h3>Continuous Optimization</h3>
+        <p>AI platforms update constantly. We adjust the strategy monthly so your visibility holds &mdash; and improves &mdash; instead of quietly decaying.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="section-head">
+      <span class="eyebrow">How It Starts</span>
+      <h2>From first call to live program, with no guesswork on your end.</h2>
+    </div>
+    <div class="process-row">
+      <div class="proc-step">
+        <div class="pnum">01</div>
+        <h3>Intro call</h3>
+        <p>We learn your practice areas, markets, and current online presence.</p>
+      </div>
+      <div class="proc-step">
+        <div class="pnum">02</div>
+        <h3>Strategy &amp; proposal</h3>
+        <p>You get a plan specific to your firm, with clear scope and pricing &mdash; no surprises.</p>
+      </div>
+      <div class="proc-step">
+        <div class="pnum">03</div>
+        <h3>Buildout</h3>
+        <p>We implement the content, technical, and citation work over the first weeks of the engagement.</p>
+      </div>
+      <div class="proc-step">
+        <div class="pnum">04</div>
+        <h3>Ongoing growth</h3>
+        <p>Monthly monitoring and optimization keep your firm visible as AI platforms evolve.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="founder">
+      <div class="founder-mark">E</div>
+      <div>
+        <blockquote>"I started Automations by Eve because law firms are excellent at serving the clients who find them &mdash; and almost entirely unprepared for how people are starting to search. My job is to close that gap before your competitors do."</blockquote>
+        <div class="sig">&mdash; Evelyn Twitty, Founder, Automations by Eve</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-box">
+      <div>
+        <h2>Find out where your firm stands today.</h2>
+        <p>A short call is enough to show you how your firm currently shows up &mdash; or doesn't &mdash; across AI search, and what it would take to fix it.</p>
+      </div>
+      <div class="contact-right">
+        <a class="btn-primary" style="text-align:center;" href="mailto:evelyn@automationsbyeve.com" id="contact-btn">Contact us</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Automations by Eve. All rights reserved.</p>
+    <p>Generative Engine Optimization for law firms.</p>
+  </footer>
+
+</div>
+
+
+
+</body></html>
