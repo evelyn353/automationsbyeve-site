@@ -311,6 +311,93 @@ footer p{color:var(--ink-soft); font-size:0.82rem; margin:0;}
     </div>
   </section>
 
+  <style>
+    .roi-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:40px;}
+    .roi-stat{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:22px;}
+    .roi-num{font-family:'Fraunces',serif; font-size:2rem; color:var(--gold-bright); line-height:1;}
+    .roi-stat p{color:var(--ink-soft); font-size:0.92rem; margin-top:10px;}
+    .roi-src{display:block; margin-top:8px; font-size:0.78rem; color:var(--teal-bright); font-style:italic;}
+    .roi-calc{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:28px;}
+    .roi-calc-head h3{font-size:1.2rem;}
+    .roi-calc-head p{color:var(--ink-soft); font-size:0.9rem; margin-top:8px; max-width:52ch;}
+    .roi-calc-body{display:grid; grid-template-columns:1.2fr 1fr; gap:28px; align-items:center; margin-top:22px;}
+    .roi-inputs{display:flex; flex-direction:column; gap:18px;}
+    .roi-inputs label{font-size:0.88rem; color:var(--ink-soft); font-weight:600;}
+    .roi-input-wrap{display:flex; align-items:center; border:1px solid var(--line); border-radius:4px; padding:8px 12px; margin-top:6px; background:var(--paper);}
+    .roi-input-wrap span{color:var(--ink-soft); margin-right:4px;}
+    .roi-input-wrap input{border:none; background:transparent; color:var(--ink); font-size:1rem; width:100%; outline:none; font-family:inherit;}
+    .roi-output{text-align:center; border-left:1px solid var(--line); padding-left:28px;}
+    .roi-output-label{font-size:0.85rem; color:var(--ink-soft);}
+    .roi-output-num{font-family:'Fraunces',serif; font-size:2.6rem; color:var(--sage-bright); margin-top:6px; font-variant-numeric:tabular-nums;}
+    .roi-disclaimer{font-size:0.78rem; color:var(--ink-soft); margin-top:16px;}
+    @media (max-width:720px){
+      .roi-stats{grid-template-columns:1fr;}
+      .roi-calc-body{grid-template-columns:1fr;}
+      .roi-output{border-left:none; border-top:1px solid var(--line); padding-left:0; padding-top:18px; margin-top:4px;}
+    }
+  </style>
+
+  <section id="impact">
+    <div class="section-head">
+      <span class="eyebrow">Why It Matters</span>
+      <h2>The traffic your firm used to get is being absorbed by the answer itself.</h2>
+      <p>These aren't our numbers &mdash; they're independent research on how AI search is already changing where clicks go.</p>
+    </div>
+    <div class="roi-stats">
+      <div class="roi-stat">
+        <div class="roi-num">8%</div>
+        <p>of visits still click through to a traditional result when an AI summary appears &mdash; versus 15% when it doesn't.<span class="roi-src">Pew Research Center, 2025</span></p>
+      </div>
+      <div class="roi-stat">
+        <div class="roi-num">26%</div>
+        <p>of searches with an AI summary end with no further click at all, versus 16% of searches without one.<span class="roi-src">Pew Research Center, 2025</span></p>
+      </div>
+      <div class="roi-stat">
+        <div class="roi-num">&minus;61%</div>
+        <p>average drop in organic click-through rate on search queries where an AI Overview appears.<span class="roi-src">Seer Interactive, 2025</span></p>
+      </div>
+    </div>
+
+    <div class="roi-calc">
+      <div class="roi-calc-head">
+        <h3>What one more client a month is worth</h3>
+        <p>Plug in your own numbers below. This is simple math on your own inputs &mdash; not a projection, a guarantee, or a past client result.</p>
+      </div>
+      <div class="roi-calc-body">
+        <div class="roi-inputs">
+          <label>Average value of a new client or case
+            <div class="roi-input-wrap"><span>$</span><input type="number" id="roi-value" value="5000" min="0" step="100"></div>
+          </label>
+          <label>Extra clients per month, if your firm became a name AI recommends
+            <div class="roi-input-wrap"><input type="number" id="roi-extra" value="1" min="0" step="1"></div>
+          </label>
+        </div>
+        <div class="roi-output">
+          <div class="roi-output-label">Added value per year</div>
+          <div class="roi-output-num" id="roi-result">$60,000</div>
+        </div>
+      </div>
+      <p class="roi-disclaimer">Illustrative only. Actual results depend on your practice area, market, and current visibility &mdash; a strategy call will give you a realistic read on your specific firm.</p>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      var valEl = document.getElementById('roi-value');
+      var extraEl = document.getElementById('roi-extra');
+      var out = document.getElementById('roi-result');
+      function fmt(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+      function calc(){
+        var v = parseFloat(valEl.value) || 0;
+        var e = parseFloat(extraEl.value) || 0;
+        out.textContent = fmt(v * e * 12);
+      }
+      valEl.addEventListener('input', calc);
+      extraEl.addEventListener('input', calc);
+      calc();
+    })();
+  </script>
+
   <section>
     <div class="founder">
       <div class="founder-mark">E</div>
