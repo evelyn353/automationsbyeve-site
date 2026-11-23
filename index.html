@@ -456,6 +456,10 @@ footer p{color:var(--ink-soft); font-size:0.82rem; margin:0;}
 
   <style>
     .visq-card{background:var(--card); border:2px solid var(--gold); border-radius:8px; padding:28px; box-shadow:0 10px 32px -12px color-mix(in srgb, var(--gold) 45%, transparent);}
+    .glossary-term{position:relative; border-bottom:1px dotted var(--teal-bright); cursor:help; font-weight:inherit;}
+    .glossary-tip{display:none; position:absolute; bottom:calc(100% + 10px); left:50%; transform:translateX(-50%); width:min(240px,70vw); background:var(--ink); color:var(--paper); font-size:0.8rem; font-weight:400; line-height:1.4; padding:10px 12px; border-radius:6px; box-shadow:0 10px 28px -8px rgba(0,0,0,0.45); z-index:20; text-align:left;}
+    .glossary-tip::after{content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--ink);}
+    .glossary-term:hover .glossary-tip, .glossary-term:focus .glossary-tip, .glossary-term.open .glossary-tip{display:block;}
     .visq-card button{font-family:inherit;}
     .visq-q{padding:18px 0; border-bottom:1px solid var(--line);}
     .visq-q-text{font-size:0.95rem; color:var(--ink); max-width:56ch; font-weight:600;}
@@ -503,7 +507,7 @@ footer p{color:var(--ink-soft); font-size:0.82rem; margin:0;}
         </div>
       </div>
       <div class="visq-q" data-q="q4">
-        <div class="visq-q-text">4. Does your site use structured data so search engines and AI systems understand your location, practice areas, and credentials?</div>
+        <div class="visq-q-text">4. Does your site use <span class="glossary-term" tabindex="0">structured data<span class="glossary-tip">Structured data is hidden code that spells out facts about your business &mdash; like your name, location, and credentials &mdash; in a format search engines and AI systems can read directly.</span></span> so search engines and AI systems understand your location, practice areas, and credentials?</div>
         <div class="visq-toggles">
           <button type="button" class="visq-btn" data-val="yes">Yes</button>
           <button type="button" class="visq-btn" data-val="no">Not yet</button>
@@ -582,6 +586,28 @@ footer p{color:var(--ink-soft); font-size:0.82rem; margin:0;}
         result.classList.add('show');
         hint.textContent = '';
         result.scrollIntoView({behavior:'smooth', block:'nearest'});
+      });
+    })();
+  </script>
+
+  <script>
+    (function(){
+      document.querySelectorAll('.glossary-term').forEach(function(term){
+        term.addEventListener('click', function(e){
+          e.stopPropagation();
+          var isOpen = term.classList.contains('open');
+          document.querySelectorAll('.glossary-term.open').forEach(function(t){ t.classList.remove('open'); });
+          if (!isOpen) term.classList.add('open');
+        });
+        term.addEventListener('keydown', function(e){
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            term.click();
+          }
+        });
+      });
+      document.addEventListener('click', function(){
+        document.querySelectorAll('.glossary-term.open').forEach(function(t){ t.classList.remove('open'); });
       });
     })();
   </script>
