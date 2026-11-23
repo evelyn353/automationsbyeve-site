@@ -398,6 +398,138 @@ footer p{color:var(--ink-soft); font-size:0.82rem; margin:0;}
     })();
   </script>
 
+  <style>
+    .visq-card{background:var(--card); border:2px solid var(--gold); border-radius:8px; padding:28px; box-shadow:0 10px 32px -12px color-mix(in srgb, var(--gold) 45%, transparent);}
+    .visq-card button{font-family:inherit;}
+    .visq-q{padding:18px 0; border-bottom:1px solid var(--line);}
+    .visq-q-text{font-size:0.95rem; color:var(--ink); max-width:56ch; font-weight:600;}
+    .visq-toggles{display:flex; gap:10px; margin-top:12px;}
+    .visq-btn{padding:8px 18px; border-radius:20px; border:1px solid var(--line); background:var(--paper); color:var(--ink-soft); font-size:0.85rem; font-weight:600; cursor:pointer;}
+    .visq-btn.active-yes{background:var(--sage); border-color:var(--sage); color:#121815;}
+    .visq-btn.active-no{background:var(--line); border-color:var(--ink-soft); color:var(--ink);}
+    .visq-actions{margin-top:26px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+    .visq-actions .btn-primary{cursor:pointer;}
+    .visq-hint{font-size:0.82rem; color:var(--ink-soft);}
+    .visq-result{display:none; margin-top:28px; padding-top:24px; border-top:1px solid var(--line);}
+    .visq-result.show{display:block;}
+    .visq-score{font-family:'Fraunces',serif; font-size:2.6rem; color:var(--gold-bright); line-height:1;}
+    .visq-score-label{font-size:0.85rem; color:var(--ink-soft); margin-top:4px;}
+    .visq-result-msg{margin-top:14px; font-size:0.98rem; color:var(--ink); max-width:60ch;}
+    .visq-result a.btn-primary{margin-top:18px; display:inline-flex;}
+  </style>
+
+  <section id="visibility-quiz">
+    <div class="section-head">
+      <span class="eyebrow">Quick Self-Check</span>
+      <h2>How visible is your firm to AI search right now?</h2>
+      <p>Six questions, about a minute. Answer honestly &mdash; the gaps are more common than you'd think.</p>
+    </div>
+    <div class="visq-card">
+      <div class="visq-q" data-q="q1">
+        <div class="visq-q-text">1. Does your site have a dedicated page for each practice area, not just one general page?</div>
+        <div class="visq-toggles">
+          <button type="button" class="visq-btn" data-val="yes">Yes</button>
+          <button type="button" class="visq-btn" data-val="no">Not yet</button>
+        </div>
+      </div>
+      <div class="visq-q" data-q="q2">
+        <div class="visq-q-text">2. Do your attorney bios include credentials, case results, and media mentions in detail &mdash; not just a photo and a paragraph?</div>
+        <div class="visq-toggles">
+          <button type="button" class="visq-btn" data-val="yes">Yes</button>
+          <button type="button" class="visq-btn" data-val="no">Not yet</button>
+        </div>
+      </div>
+      <div class="visq-q" data-q="q3">
+        <div class="visq-q-text">3. Has your firm been quoted or featured in legal, local, or industry press in the last 12 months?</div>
+        <div class="visq-toggles">
+          <button type="button" class="visq-btn" data-val="yes">Yes</button>
+          <button type="button" class="visq-btn" data-val="no">Not yet</button>
+        </div>
+      </div>
+      <div class="visq-q" data-q="q4">
+        <div class="visq-q-text">4. Does your site use structured data so search engines and AI systems understand your location, practice areas, and credentials?</div>
+        <div class="visq-toggles">
+          <button type="button" class="visq-btn" data-val="yes">Yes</button>
+          <button type="button" class="visq-btn" data-val="no">Not yet</button>
+        </div>
+      </div>
+      <div class="visq-q" data-q="q5">
+        <div class="visq-q-text">5. If you ask ChatGPT or Perplexity for the best lawyer for your practice area in your city, does your firm come up by name?</div>
+        <div class="visq-toggles">
+          <button type="button" class="visq-btn" data-val="yes">Yes</button>
+          <button type="button" class="visq-btn" data-val="no">Not yet</button>
+        </div>
+      </div>
+      <div class="visq-q" data-q="q6">
+        <div class="visq-q-text">6. Do you have a standing process for monitoring and updating how your firm appears on AI platforms?</div>
+        <div class="visq-toggles">
+          <button type="button" class="visq-btn" data-val="yes">Yes</button>
+          <button type="button" class="visq-btn" data-val="no">Not yet</button>
+        </div>
+      </div>
+
+      <div class="visq-actions">
+        <button type="button" class="btn-primary" id="visq-score-btn">See my score</button>
+        <span class="visq-hint" id="visq-hint"></span>
+      </div>
+
+      <div class="visq-result" id="visq-result">
+        <div class="visq-score" id="visq-score-num">0 / 6</div>
+        <div class="visq-score-label">Your AI visibility score</div>
+        <p class="visq-result-msg" id="visq-result-msg"></p>
+        <a class="btn-primary" href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3nX2CyaQxqcq_AnFMfI_MJLvU2cSxp_-VjYld-RpXFO_lhc6ZgekcteFR5w5e-VHRgd0aRGIZx" target="_blank" rel="noopener">See exactly where your gaps are &mdash; book a call</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      var answers = {};
+      var questions = document.querySelectorAll('.visq-q');
+      var scoreBtn = document.getElementById('visq-score-btn');
+      var hint = document.getElementById('visq-hint');
+      var result = document.getElementById('visq-result');
+      var scoreNum = document.getElementById('visq-score-num');
+      var resultMsg = document.getElementById('visq-result-msg');
+
+      questions.forEach(function(q){
+        var id = q.dataset.q;
+        var btns = q.querySelectorAll('.visq-btn');
+        btns.forEach(function(btn){
+          btn.addEventListener('click', function(){
+            answers[id] = btn.dataset.val === 'yes';
+            btns.forEach(function(b){ b.classList.remove('active-yes','active-no'); });
+            btn.classList.add(btn.dataset.val === 'yes' ? 'active-yes' : 'active-no');
+          });
+        });
+      });
+
+      scoreBtn.addEventListener('click', function(){
+        var total = questions.length;
+        var answered = Object.keys(answers).length;
+        if (answered < total) {
+          hint.textContent = 'Answer all ' + total + ' questions to see your score (' + answered + ' of ' + total + ' so far).';
+          return;
+        }
+        var score = 0;
+        Object.keys(answers).forEach(function(k){ if (answers[k]) score++; });
+        scoreNum.textContent = score + ' / ' + total;
+        var msg;
+        if (score >= 5) {
+          msg = "You're ahead of most firms. The bar keeps moving though &mdash; a quick call can show you how to hold that lead as AI platforms keep changing.";
+        } else if (score >= 3) {
+          msg = "You have real pieces in place, but the gaps you haven't checked yet are likely costing you clients who are asking AI for a recommendation right now.";
+        } else {
+          msg = "Your firm is largely invisible to AI search right now &mdash; which means competitors who've already adapted are capturing clients who should be yours.";
+        }
+        resultMsg.innerHTML = msg;
+        result.classList.add('show');
+        hint.textContent = '';
+        result.scrollIntoView({behavior:'smooth', block:'nearest'});
+      });
+    })();
+  </script>
+
   <section>
     <div class="founder">
       <div class="founder-mark">E</div>
